@@ -62,7 +62,7 @@ public class BeanTable<T> extends AbstractTable {
         rows = builder.beanList.toArray();
         PropertyDescriptor[] descriptors;
         try {
-            descriptors = Introspector.getBeanInfo(builder.type, Object.class)
+            descriptors = Introspector.getBeanInfo(builder.type, builder.base)
                 .getPropertyDescriptors();
         } catch (IntrospectionException e) {
             throw new DatabaseUnitRuntimeException(e);
@@ -115,6 +115,8 @@ public class BeanTable<T> extends AbstractTable {
         private final Set<String> excludedNames = new HashSet<String>();
 
         private final Set<Class<?>> excludedTypes = new HashSet<Class<?>>();
+
+        private Class<? super T> base = Object.class;
 
         private Naming naming = Naming.RAW;
 
@@ -177,6 +179,20 @@ public class BeanTable<T> extends AbstractTable {
                 if (bean == null) throw new NullPointerException("beans must not contain null");
                 beanList.add(bean);
             }
+            return this;
+        }
+
+        /**
+         * Specifies the base class of the POJO.
+         *
+         * <p>Default: {@link Object}</p>
+         *
+         * @param base the base class, non-nullable
+         * @return the reference to this object
+         */
+        public Builder base(Class<? super T> base) {
+            if (base == null) throw new NullPointerException("base must not be null");
+            this.base = base;
             return this;
         }
 

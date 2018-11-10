@@ -58,7 +58,6 @@ class BeanTableTest {
             .exclude('big_decimal', 'date')
             .build()
         def actual = sut.tableMetaData.columns.collect { it.columnName }
-        println actual
         assertThat(actual, allOf(
             not(hasItem('big_decimal')),
             not(hasItem('date'))
@@ -75,6 +74,27 @@ class BeanTableTest {
             not(hasItem('big_decimal')),
             not(hasItem('date'))
         ))
+    }
+
+    @Test
+    void with_base_class_properties() {
+        def sut = new BeanTable.Builder(TestBeanExtended).naming(Naming.CAMEL_TO_SNAKE)
+            .build()
+        def actual = sut.tableMetaData.columns.collect { it.columnName }
+        def matchers = beanProperties.keySet().collect { hasItem(it) }
+        matchers << hasItem('extended_field')
+        assertThat(actual, allOf(matchers))
+    }
+
+    @Test
+    void without_base_class_properties() {
+        def sut = new BeanTable.Builder(TestBeanExtended).naming(Naming.CAMEL_TO_SNAKE)
+            .base(TestBean)
+            .build()
+        def actual = sut.tableMetaData.columns.collect { it.columnName }
+        def matchers = beanProperties.keySet().collect { not(hasItem(it)) }
+        matchers << hasItem('extended_field')
+        assertThat(actual, allOf(matchers))
     }
 
     @Test
