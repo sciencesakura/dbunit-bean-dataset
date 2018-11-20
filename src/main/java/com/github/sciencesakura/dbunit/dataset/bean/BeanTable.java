@@ -148,7 +148,7 @@ public class BeanTable<T> extends AbstractTable {
          * @param bean the POJO to add, non-nullable
          * @return the reference to this object
          */
-        public Builder add(T bean) {
+        public Builder<T> add(T bean) {
             if (bean == null) throw new NullPointerException("bean must not be null");
             beanList.add(bean);
             return this;
@@ -160,7 +160,7 @@ public class BeanTable<T> extends AbstractTable {
          * @param beans the POJOs to add, non-nullable
          * @return the reference to this object
          */
-        public Builder add(T... beans) {
+        public Builder<T> add(T... beans) {
             for (T bean : beans) {
                 if (bean == null) throw new NullPointerException("beans must not contain null");
                 beanList.add(bean);
@@ -174,7 +174,7 @@ public class BeanTable<T> extends AbstractTable {
          * @param beans the POJOs to add, non-nullable
          * @return the reference to this object
          */
-        public Builder add(Collection<? extends T> beans) {
+        public Builder<T> add(Collection<? extends T> beans) {
             for (T bean : beans) {
                 if (bean == null) throw new NullPointerException("beans must not contain null");
                 beanList.add(bean);
@@ -190,7 +190,7 @@ public class BeanTable<T> extends AbstractTable {
          * @param base the base class, non-nullable
          * @return the reference to this object
          */
-        public Builder base(Class<? super T> base) {
+        public Builder<T> base(Class<? super T> base) {
             if (base == null) throw new NullPointerException("base must not be null");
             this.base = base;
             return this;
@@ -211,7 +211,7 @@ public class BeanTable<T> extends AbstractTable {
          * @param propertyNames the property names to exclude, non-nullable
          * @return the reference to this object
          */
-        public Builder exclude(String... propertyNames) {
+        public Builder<T> exclude(String... propertyNames) {
             for (String name : propertyNames) {
                 if (name == null) throw new NullPointerException("propertyNames must not contain null");
                 excludedNames.add(name);
@@ -225,7 +225,7 @@ public class BeanTable<T> extends AbstractTable {
          * @param propertyTypes the property types to exclude, non-nullable
          * @return the reference to this object
          */
-        public Builder exclude(Class<?>... propertyTypes) {
+        public Builder<T> exclude(Class<?>... propertyTypes) {
             for (Class<?> type : propertyTypes) {
                 if (type == null) throw new NullPointerException("propertyTypes must not contain null");
                 excludedTypes.add(type);
@@ -241,7 +241,7 @@ public class BeanTable<T> extends AbstractTable {
          * @param naming the naming convention, non-nullable
          * @return the reference to this object
          */
-        public Builder naming(Naming naming) {
+        public Builder<T> naming(Naming naming) {
             if (naming == null) throw new NullPointerException("naming must not be null");
             this.naming = naming;
             return this;
