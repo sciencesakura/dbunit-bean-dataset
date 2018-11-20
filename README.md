@@ -16,12 +16,14 @@ You can obtain a `BeanTable` instance by using its builder object that provides 
 List<Customer> actual = sut.findAll();
 // create BeanTable instance
 ITable actualTable = new BeanTable.Builder<>(Customer.class)
-        .add(actual)                         // appends the POJOs
+        .add(actual)                         // add the POJOs
         .naming(Naming.CAMEL_TO_SNAKE)       // naming convention for columns
         .exclude("created_at", "updated_at") // excludes the properties
         .build();                            // returns BeanTable instance
 Assertion.assertEquals(expected, actualTable);
 ```
+
+See [API reference](https://sciencesakura.github.io/dbunit-bean-dataset/) for details.
 
 ## Licence
 

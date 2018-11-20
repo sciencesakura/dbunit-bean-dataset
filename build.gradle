@@ -26,10 +26,15 @@ dependencies {
     testCompile 'org.hamcrest:hamcrest-library:1.3'
 }
 
+clean {
+    delete << "${rootDir}/docs"
+}
+
 javadoc {
     destinationDir = new File(projectDir, 'docs')
     options.encoding = 'utf-8'
     options.locale = 'en'
+    options.overview = 'src/main/javadoc/overview.html'
     options.links('https://docs.oracle.com/javase/8/docs/api/')
     options.links('http://dbunit.sourceforge.net/apidocs/')
 }
